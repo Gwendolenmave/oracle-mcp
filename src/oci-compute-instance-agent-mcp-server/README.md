@@ -32,12 +32,20 @@ Register `${ORACLE_MCP_BASE_URL}/auth/callback` in the OCI IAM confidential appl
 
 | Tool Name | Description |
 | --- | --- |
-| list_instance_agent_commands | List instance agent commands |
-| get_instance_agent_command | Get instance agent command by ID |
-| create_instance_agent_command | Create a new instance agent command |
-| list_instance_agent_command_executions | List command executions for an instance agent command |
+| `run_instance_agent_command` | Create a Run Command for a compute instance and return the execution result |
+| `list_instance_agent_command_executions` | List Run Command executions for a compute instance |
+
+The exported tool names above match the current `server.py` implementation.
 
 ⚠️ **NOTE**: `stdio` uses the configured OCI CLI profile. HTTP uses the authenticated OCI IAM user and does not use the local OCI CLI profile for request authentication.
+
+## Virginia dual-path deployment
+
+This fork includes a deployment design for running this MCP as a continuously available remote control path on an OCI VPS while keeping an independent local stdio recovery path.
+
+See [`VIRGINIA-CONTROL.md`](./VIRGINIA-CONTROL.md) and the templates under [`deploy/`](./deploy/).
+
+No real OCIDs, private keys, tokens, client secrets, or `.env` files should be committed to this repository.
 
 ## Third-Party APIs
 
