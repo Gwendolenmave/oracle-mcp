@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Added Virginia dual-path deployment guidance and templates for a remote HTTP MCP service plus an independent local stdio recovery path.
+
+### Fixed
+
+- Updated the README tool table to match the tools actually exported by `server.py`.
+
 ## 3.0.1
 
 ### Changed
