@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "oracle-oci-compute-instance-agent": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--project",
+        "<ABSOLUTE_PATH_TO_FORK>/src/oci-compute-instance-agent-mcp-server",
+        "oracle.oci-compute-instance-agent-mcp-server"
+      ],
+      "env": {
+        "OCI_CONFIG_PROFILE": "AMELIA_OPERATOR",
+        "OCI_REGION": "us-ashburn-1",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      }
+    }
+  }
+}
