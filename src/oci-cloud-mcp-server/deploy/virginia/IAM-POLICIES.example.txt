@@ -1,0 +1,20 @@
+# Public-safe templates only. Replace placeholders in the OCI Console; do not
+# commit real domain, group, compartment, or instance identifiers.
+
+# Option A: intentionally grant the Amelia/Codex operator full tenancy control.
+Allow group <IDENTITY_DOMAIN_NAME>/AmeliaOperators to manage all-resources in tenancy
+
+# In the Default identity domain, omit "<IDENTITY_DOMAIN_NAME>/".
+
+# Dynamic group matching rule for the Virginia instance:
+instance.id = '<VIRGINIA_INSTANCE_OCID>'
+
+# Let the instance poll and report its own Run Command executions:
+Allow dynamic-group <IDENTITY_DOMAIN_NAME>/VirginiaRunCommandTarget to use instance-agent-command-execution-family in compartment <COMPARTMENT_NAME> where request.instance.id=target.instance.id
+
+# Narrower operator policy, only if full tenancy control is not desired:
+Allow group <IDENTITY_DOMAIN_NAME>/AmeliaOperators to manage instance-agent-command-family in compartment <COMPARTMENT_NAME>
+Allow group <IDENTITY_DOMAIN_NAME>/AmeliaOperators to read instance-agent-plugins in compartment <COMPARTMENT_NAME>
+
+# Optional Object Storage policies are required only when command source/output
+# uses buckets instead of inline text. See Oracle's Run Command documentation.

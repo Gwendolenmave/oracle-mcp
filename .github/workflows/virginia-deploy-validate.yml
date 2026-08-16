@@ -1,0 +1,36 @@
+name: Virginia deployment validation
+
+on:
+  pull_request:
+    paths:
+      - "src/oci-cloud-mcp-server/deploy/**"
+      - ".github/workflows/virginia-deploy-validate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate shell syntax
+        run: |
+          bash -n src/oci-cloud-mcp-server/deploy/virginia/install.sh
+          bash -n src/oci-cloud-mcp-server/deploy/virginia/validate-config.sh
+
+      - name: Validate local MCP JSON
+        run: python -m json.tool src/oci-cloud-mcp-server/deploy/local/mcp.local.example.json >/dev/null
+
+      - name: Validate systemd unit
+        run: systemd-analyze verify src/oci-cloud-mcp-server/deploy/virginia/oracle-oci-cloud-mcp.service
+
+      - name: Reject obvious committed secrets
+        shell: bash
+        run: |
+          if grep -RInE 'ocid1\.|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|IDCS_CLIENT_SECRET=[^<]' src/oci-cloud-mcp-server/deploy; then
+            echo "Deployment templates appear to contain a real secret or OCID." >&2
+            exit 1
+          fi
