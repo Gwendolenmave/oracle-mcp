@@ -1,0 +1,7 @@
+# Replace mcp.example.com with the real DNS name.
+# The MCP process stays on loopback; Caddy owns the public HTTPS listener.
+
+mcp.example.com {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:8889
+}
