@@ -25,7 +25,9 @@ jobs:
         run: python -m json.tool src/oci-cloud-mcp-server/deploy/local/mcp.local.example.json >/dev/null
 
       - name: Validate systemd unit
-        run: systemd-analyze verify src/oci-cloud-mcp-server/deploy/virginia/oracle-oci-cloud-mcp.service
+        run: |
+          sudo install -m 0755 /usr/bin/true /usr/local/bin/uv
+          systemd-analyze verify src/oci-cloud-mcp-server/deploy/virginia/oracle-oci-cloud-mcp.service
 
       - name: Reject obvious committed secrets
         shell: bash
