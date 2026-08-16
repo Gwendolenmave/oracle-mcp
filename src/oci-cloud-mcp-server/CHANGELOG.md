@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Added public-safe Virginia dual-path deployment templates for running `oci-cloud-mcp-server` over authenticated HTTP with systemd/Caddy while retaining an independent local stdio recovery controller.
+- Added OCI Run Command recipes plus IAM and optional `ocarun` root-control guidance for guest-OS maintenance through the generic `invoke_oci_api` tool.
+
 ## 2.2.2
 
 ### Changed
